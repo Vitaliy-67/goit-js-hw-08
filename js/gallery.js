@@ -106,5 +106,4 @@ elementGallery.addEventListener("click", (event) => {
     `
   );
   modalInstance.show();
-  console.dir(galleryInfo);
 });
