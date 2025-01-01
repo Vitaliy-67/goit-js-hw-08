@@ -64,10 +64,10 @@ const images = [
   },
 ];
 
-const createGalleryCard = image => {
+const createGalleryCard = (image) => {
   return `
     <li class="gallery-item">
-        <a class="gallery-link" href="${image.original}">
+        <a class="gallery-link" href="${image.original} " onclick="return false">
         <img
             class="gallery-image"
             src="${image.preview}"
@@ -78,11 +78,33 @@ const createGalleryCard = image => {
     </li>`;
 };
 
-const galleryCard = images.map(element =>
-createGalleryCard(element)) .join('');
+const galleryCard = images
+  .map((element) => createGalleryCard(element))
+  .join("");
 
 const elementGallery = document.querySelector(".gallery");
 
 elementGallery.innerHTML = galleryCard;
 
+elementGallery.addEventListener("click", (event) => {
+  if (event.target === event.currentTarget) {
+    return;
+  }
+  const galleryCardEl = event.target.closest(".gallery-link");
 
+  const cardLinck = galleryCardEl.href;
+
+  const galleryInfo = images.find((el) => el.original === cardLinck);
+
+  const modalInstance = basicLightbox.create(
+    `  <img
+            class="gallery-image"
+            src="${galleryInfo.original}"
+            data-source="${galleryInfo.original}"
+            alt="${galleryInfo.description}"
+        />
+    `
+  );
+  modalInstance.show();
+  console.dir(galleryInfo);
+});
